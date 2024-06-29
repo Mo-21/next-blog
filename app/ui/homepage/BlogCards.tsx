@@ -13,9 +13,9 @@ const BlogCards = () => {
           <CardBody>
             <div className="flex flex-col lg:flex-row gap-4 ">
               <Image
-                src={c.img}
-                width="200"
-                height="100"
+                src={c.img.src}
+                width={c.img.width}
+                height={c.img.height}
                 alt={c.title}
                 className="rounded-md"
               />
