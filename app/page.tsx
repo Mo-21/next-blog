@@ -1,5 +1,11 @@
+import NavigationBar from "./NavigationBar";
+
 const Home = () => {
-  return <div>Hello</div>;
+  return (
+    <div>
+      <NavigationBar />
+    </div>
+  );
 };
 
 export default Home;
