@@ -1,7 +1,7 @@
 import { getOnePost } from "@/app/utils/getOnePost";
 import dynamic from "next/dynamic";
 
-const EditPost = dynamic(() => import("./EditPostForm"), {
+const EditPost = dynamic(() => import("../../components/PostsForm"), {
   ssr: false,
 });
 

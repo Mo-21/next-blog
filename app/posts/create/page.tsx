@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-const Form = dynamic(() => import("./NewPostFields"), {
+const Form = dynamic(() => import("../components/PostsForm"), {
   ssr: false,
 });
 

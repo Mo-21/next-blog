@@ -6,14 +6,19 @@ import {
   postValidationSchema,
 } from "@/app/lib/schemas/postsValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Spinner } from "@nextui-org/react";
+import { Button, Spinner, Input } from "@nextui-org/react";
 import { Post } from "@prisma/client";
-import { Controller, useForm } from "react-hook-form";
-import SimpleMDE from "react-simplemde-editor";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
 
-const EditPostForm = ({ post, id }: { post: Post; id: string }) => {
+interface PostsFormProps {
+  post?: Post;
+  id?: string;
+}
+
+const PostsForm = ({ post, id }: PostsFormProps) => {
   const {
     register,
     control,
@@ -25,20 +30,29 @@ const EditPostForm = ({ post, id }: { post: Post; id: string }) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { push } = useRouter();
+  const { push, refresh } = useRouter();
 
   const onSubmit = handleSubmit(async (data) => {
-    setIsLoading(true);
     try {
-      await fetch(`/api/posts/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify(data),
-      });
+      setIsLoading(true);
+
+      if (post) {
+        await fetch(`/api/posts/${id}`, {
+          method: "PATCH",
+          body: JSON.stringify(data),
+        });
+      } else {
+        await fetch("/api/posts", {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
       push("/posts");
+      refresh();
     }
   });
 
@@ -47,7 +61,7 @@ const EditPostForm = ({ post, id }: { post: Post; id: string }) => {
       <Input
         placeholder="Title"
         {...register("title")}
-        defaultValue={post.title}
+        defaultValue={post?.title || ""}
       />
       {errors && errors.title && (
         <p className="text-red-500">{errors.title.message}</p>
@@ -55,7 +69,7 @@ const EditPostForm = ({ post, id }: { post: Post; id: string }) => {
 
       <Controller
         name="content"
-        defaultValue={post.content}
+        defaultValue={post?.content || ""}
         control={control}
         render={({ field }) => <SimpleMDE placeholder="Content" {...field} />}
       />
@@ -63,11 +77,11 @@ const EditPostForm = ({ post, id }: { post: Post; id: string }) => {
         <p className="text-red-500">{errors.content.message}</p>
       )}
 
-      <Button color="success" type="submit">
-        {isLoading ? <Spinner /> : "Update"}
+      <Button disabled={isLoading} color="success" type="submit">
+        {isLoading ? <Spinner color="white" /> : post ? "Update" : "Create"}
       </Button>
     </form>
   );
 };
 
-export default EditPostForm;
+export default PostsForm;
