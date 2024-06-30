@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/prismaClient";
 
@@ -12,8 +11,6 @@ export async function POST(request: NextRequest) {
       authorId: 1,
     },
   });
-
-  revalidatePath("/posts");
 
   return NextResponse.json(body);
 }

@@ -1,5 +1,4 @@
 import prisma from "@/prisma/prismaClient";
-import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
@@ -18,8 +17,6 @@ export async function PATCH(
       authorId: 1,
     },
   });
-
-  revalidatePath("/posts");
 
   return NextResponse.json(updatedPost);
 }
