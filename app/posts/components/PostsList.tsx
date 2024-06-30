@@ -7,7 +7,7 @@ const PostsList = ({ posts }: { posts: Post[] }) => {
     <div className="grid grid-cols-2 gap-3 mt-4">
       {posts.map((p) => (
         <Card key={p.id} radius="none">
-          <Link href={`/posts/edit/${p.id}`}>
+          <Link href={`/posts/${p.id}`}>
             <CardHeader className="prose hover:cursor-pointer">
               <h2>{p.title}</h2>
             </CardHeader>
