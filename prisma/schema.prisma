@@ -16,8 +16,9 @@ datasource db {
 model Post {
   id        Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
+  content   String   @db.LongText()
+  img       String?
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  content   String
   published Boolean  @default(false)
   authorId  Int
   User      User     @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
