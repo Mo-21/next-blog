@@ -23,7 +23,7 @@ const BlogPost = ({ post }: { post: BlogPostProps }) => {
       className="my-3 h-[calc(100vh-1.5rem)] flex justify-center items-center"
     >
       <Card className="h-full w-full max-w-4xl overflow-hidden">
-        <Input hidden name="id" defaultValue={post.id.toString()} />
+        <Input className="hidden" name="id" defaultValue={post.id.toString()} />
         <CardHeader className="prose flex flex-col items-start min-w-full">
           <h1>{post.title}</h1>
           <div className="prose flex justify-between min-w-full">
@@ -34,7 +34,7 @@ const BlogPost = ({ post }: { post: BlogPostProps }) => {
           </div>
           <Divider className="min-w-full mt-2" />
         </CardHeader>
-        <CardBody className="prose overflow-y-auto p-4">
+        <CardBody className="prose overflow-y-auto p-4 min-w-full">
           <ReactMarkdown>{post.content}</ReactMarkdown>
         </CardBody>
         <Divider />
