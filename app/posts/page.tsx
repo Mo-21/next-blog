@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { getPosts } from "../utils/getPosts";
-import PostsList from "./PostsList";
+import PostsList from "./components/PostsList";
 import NavigationBar from "../NavigationBar";
 import ActionsBar from "../ActionsBar";
 import PostsSkeleton from "../ui/skeletons/PostsSkeleton";
