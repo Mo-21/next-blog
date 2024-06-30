@@ -6,11 +6,12 @@ import {
   postValidationSchema,
 } from "@/app/lib/schemas/postsValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Spinner } from "@nextui-org/react";
 import { Post } from "@prisma/client";
 import { Controller, useForm } from "react-hook-form";
 import SimpleMDE from "react-simplemde-editor";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const EditPostForm = ({ post, id }: { post: Post; id: string }) => {
   const {
@@ -22,15 +23,23 @@ const EditPostForm = ({ post, id }: { post: Post; id: string }) => {
     resolver: zodResolver(postValidationSchema),
   });
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const { push } = useRouter();
 
   const onSubmit = handleSubmit(async (data) => {
-    await fetch(`/api/posts/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(data),
-    });
-
-    push("/posts");
+    setIsLoading(true);
+    try {
+      await fetch(`/api/posts/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+      push("/posts");
+    }
   });
 
   return (
@@ -55,7 +64,7 @@ const EditPostForm = ({ post, id }: { post: Post; id: string }) => {
       )}
 
       <Button color="success" type="submit">
-        Update
+        {isLoading ? <Spinner /> : "Update"}
       </Button>
     </form>
   );
