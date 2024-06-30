@@ -1,4 +1,5 @@
 import { Button, Input } from "@nextui-org/react";
+import Link from "next/link";
 
 const ActionsBar = () => {
   return (
@@ -15,9 +16,11 @@ const ActionsBar = () => {
         size="sm"
         type="search"
       />
-      <Button className="text-md text-white" color="success" radius="none">
-        Create new
-      </Button>
+      <Link href="/posts/create">
+        <Button className="text-md text-white" color="success" radius="none">
+          Create new
+        </Button>
+      </Link>
     </div>
   );
 };
