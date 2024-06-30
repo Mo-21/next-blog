@@ -5,4 +5,13 @@ export const getOnePost = async (id: string) =>
     where: {
       id: parseInt(id),
     },
+    include: {
+      User: {
+        select: {
+          id: true,
+          email: true,
+          name: true,
+        },
+      },
+    },
   });
