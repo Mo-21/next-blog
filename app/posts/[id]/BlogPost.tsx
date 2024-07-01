@@ -11,12 +11,9 @@ import {
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { deletePost } from "../actions";
+import { PostWithUser } from "@/app/utils/getPosts";
 
-interface BlogPostProps extends Post {
-  User: User;
-}
-
-const BlogPost = ({ post }: { post: BlogPostProps }) => {
+const BlogPost = ({ post }: { post: PostWithUser }) => {
   return (
     <form
       action={deletePost}

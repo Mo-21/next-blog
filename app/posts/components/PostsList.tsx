@@ -1,10 +1,7 @@
+import { PostWithUser } from "@/app/utils/getPosts";
 import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { Post, User } from "@prisma/client";
 import Link from "next/link";
-
-interface PostWithUser extends Post {
-  User: User;
-}
 
 const PostsList = ({ posts }: { posts: PostWithUser[] }) => {
   return (
