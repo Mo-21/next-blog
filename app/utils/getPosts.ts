@@ -5,4 +5,7 @@ export const getPosts = async () =>
     orderBy: {
       createdAt: "desc",
     },
+    include: {
+      User: true,
+    },
   });
