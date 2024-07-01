@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { getPosts } from "../utils/getPosts";
 import PostsList from "./components/PostsList";
 import NavigationBar from "../NavigationBar";
-import ActionsBar from "../ActionsBar";
+import ActionsBar from "./components/ActionsBar";
 import PostsSkeleton from "../ui/skeletons/PostsSkeleton";
 import { numberOfPages } from "../utils/getPageSize";
 import Pagination from "./components/Pagination";
