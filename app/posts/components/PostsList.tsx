@@ -1,10 +1,14 @@
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
-import { Post } from "@prisma/client";
+import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
+import { Post, User } from "@prisma/client";
 import Link from "next/link";
 
-const PostsList = ({ posts }: { posts: Post[] }) => {
+interface PostWithUser extends Post {
+  User: User;
+}
+
+const PostsList = ({ posts }: { posts: PostWithUser[] }) => {
   return (
-    <div className="grid grid-cols-2 gap-3 mt-4">
+    <div className="grid grid-cols-1 gap-3 mt-4">
       {posts.map((p) => (
         <Card key={p.id} radius="none">
           <Link href={`/posts/${p.id}`}>
@@ -13,10 +17,14 @@ const PostsList = ({ posts }: { posts: Post[] }) => {
             </CardHeader>
           </Link>
           <CardBody>
-            {p.content.length > 100
-              ? p.content.substring(0, 100) + "..."
+            {p.content.length > 300
+              ? p.content.substring(0, 300) + "..."
               : p.content}
           </CardBody>
+          <CardFooter className="prose flex justify-between items-center min-w-full">
+            <h4>{p.User.name}</h4>
+            <span>{p.createdAt.toISOString().split("T")[0]}</span>
+          </CardFooter>
         </Card>
       ))}
     </div>
