@@ -17,7 +17,7 @@ const ActionsBar = () => {
         type="search"
       />
       <Link href="/posts/create">
-        <Button className="text-md text-white" color="success" radius="none">
+        <Button className="text-md" color="success" radius="sm">
           Create new
         </Button>
       </Link>
