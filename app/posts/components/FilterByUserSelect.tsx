@@ -14,7 +14,7 @@ const FilterByUserSelect = ({ authors }: { authors: User[] }) => {
   };
 
   return (
-    <div className="mt-2 mb-4">
+    <div className="mt-2">
       <div className="relative">
         <select
           id="authors"
