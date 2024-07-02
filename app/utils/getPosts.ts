@@ -7,9 +7,15 @@ export interface PostWithUser extends Post {
 
 export const getPosts = async (
   page: number,
-  pageSize: number
+  pageSize: number,
+  userId: number | undefined
 ): Promise<PostWithUser[]> =>
   await prisma.post.findMany({
+    where: {
+      User: {
+        id: userId || undefined,
+      },
+    },
     orderBy: {
       createdAt: "desc",
     },
