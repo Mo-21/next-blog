@@ -2,12 +2,11 @@ import { Suspense } from "react";
 import { getPosts } from "../utils/getPosts";
 import PostsList from "./components/PostsList";
 import NavigationBar from "../NavigationBar";
-import ActionsBar from "./components/ActionsBar";
 import PostsSkeleton from "../ui/skeletons/PostsSkeleton";
 import { numberOfPages } from "../utils/getPageSize";
 import Pagination from "./components/Pagination";
-import FilterByUserSelect from "./components/FilterByUserSelect";
 import { getPostsAuthors } from "../utils/getAuthors";
+import ActionsAccordion from "./components/ActionsAccordion";
 
 const Page = async ({
   searchParams,
@@ -24,8 +23,7 @@ const Page = async ({
   return (
     <div>
       <NavigationBar />
-      <ActionsBar />
-      <FilterByUserSelect authors={authors} />
+      <ActionsAccordion authors={authors} />
       <Suspense fallback={<PostsSkeleton />}>
         <PostsList posts={posts} />
       </Suspense>
