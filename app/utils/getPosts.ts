@@ -8,7 +8,8 @@ export interface PostWithUser extends Post {
 export const getPosts = async (
   page: number,
   pageSize: number,
-  userId: number | undefined
+  userId: number | undefined,
+  orderDirection: "asc" | "desc"
 ): Promise<PostWithUser[]> =>
   await prisma.post.findMany({
     where: {
@@ -17,7 +18,7 @@ export const getPosts = async (
       },
     },
     orderBy: {
-      createdAt: "desc",
+      createdAt: orderDirection || "desc",
     },
     take: pageSize,
     skip: (page - 1) * pageSize,

@@ -8,15 +8,24 @@ import Pagination from "./components/Pagination";
 import { getPostsAuthors } from "../utils/getAuthors";
 import ActionsAccordion from "./components/ActionsAccordion";
 
-const Page = async ({
-  searchParams,
-}: {
-  searchParams: { page: string; user: string };
-}) => {
+interface PostsSearchParams {
+  searchParams: {
+    page: string;
+    user: string;
+    orderBy: "asc" | "desc";
+  };
+}
+
+const Page = async ({ searchParams }: PostsSearchParams) => {
   const userId = parseInt(searchParams.user);
   const currentPage = parseInt(searchParams.page);
   const PAGE_SIZE = 10;
-  const posts = await getPosts(currentPage || 1, PAGE_SIZE, userId);
+  const posts = await getPosts(
+    currentPage || 1,
+    PAGE_SIZE,
+    userId,
+    searchParams.orderBy
+  );
   const totalPages = await numberOfPages(PAGE_SIZE, userId);
   const authors = await getPostsAuthors();
 
