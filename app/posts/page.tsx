@@ -6,7 +6,7 @@ import PostsSkeleton from "../ui/skeletons/PostsSkeleton";
 import { numberOfPages } from "../utils/getPageSize";
 import Pagination from "./components/Pagination";
 import { getPostsAuthors } from "../utils/getAuthors";
-import ActionsAccordion from "./components/ActionsAccordion";
+import { dynamicImport } from "./layout";
 
 interface PostsSearchParams {
   searchParams: {
@@ -15,6 +15,11 @@ interface PostsSearchParams {
     orderBy: "asc" | "desc";
   };
 }
+
+const ActionsAccordion = dynamicImport(
+  () => import("./components/ActionsAccordion"),
+  { ssr: false }
+);
 
 const Page = async ({ searchParams }: PostsSearchParams) => {
   const userId = parseInt(searchParams.user);
