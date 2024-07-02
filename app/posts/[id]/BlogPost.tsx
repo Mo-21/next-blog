@@ -1,4 +1,3 @@
-import { Post, User } from "@prisma/client";
 import {
   Button,
   Card,
@@ -12,6 +11,7 @@ import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { deletePost } from "../actions";
 import { PostWithUser } from "@/app/utils/getPosts";
+import Image from "next/image";
 
 const BlogPost = ({ post }: { post: PostWithUser }) => {
   return (
@@ -31,6 +31,16 @@ const BlogPost = ({ post }: { post: PostWithUser }) => {
           </div>
           <Divider className="min-w-full mt-2" />
         </CardHeader>
+        {post.img && (
+          <CardBody>
+            <Image
+              src={"/" + post.img}
+              alt={post.img || "Image"}
+              width={500}
+              height={500}
+            />
+          </CardBody>
+        )}
         <CardBody className="prose overflow-y-auto p-4 min-w-full">
           <ReactMarkdown>{post.content}</ReactMarkdown>
         </CardBody>

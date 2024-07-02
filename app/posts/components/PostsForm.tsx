@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Spinner, Input } from "@nextui-org/react";
 import { Post } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import SimpleMDE from "react-simplemde-editor";
 
@@ -29,22 +29,31 @@ const PostsForm = ({ post, id }: PostsFormProps) => {
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const ref = useRef<HTMLInputElement | null>(null);
 
   const { push, refresh } = useRouter();
 
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      setIsLoading(true);
+    setIsLoading(true);
 
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("content", data.content);
+
+    if (ref.current && ref.current.files) {
+      const file = ref.current.files;
+      formData.append("img", file[0]);
+    }
+    try {
       if (post) {
         await fetch(`/api/posts/${id}`, {
           method: "PATCH",
-          body: JSON.stringify(data),
+          body: formData,
         });
       } else {
         await fetch("/api/posts", {
           method: "POST",
-          body: JSON.stringify(data),
+          body: formData,
         });
       }
     } catch (error) {
@@ -66,6 +75,11 @@ const PostsForm = ({ post, id }: PostsFormProps) => {
       {errors && errors.title && (
         <p className="text-red-500">{errors.title.message}</p>
       )}
+
+      <div className="flex justify-between">
+        <label htmlFor="img">Image</label>
+        <input type="file" name="img" ref={ref} />
+      </div>
 
       <Controller
         name="content"
