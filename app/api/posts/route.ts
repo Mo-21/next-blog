@@ -13,13 +13,15 @@ export async function POST(request: NextRequest) {
   const title = formData.get("title") as string;
   const content = formData.get("content") as string;
 
-  const filePath = `public/uploads/${file.name}`;
+  if (file) {
+    const filePath = `public/uploads/${file.name}`;
 
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-  const stream = Readable.from(buffer);
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const stream = Readable.from(buffer);
 
-  await pump(stream, fs.createWriteStream(filePath));
+    await pump(stream, fs.createWriteStream(filePath));
+  }
 
   await prisma.post.create({
     data: {
