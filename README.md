@@ -21,7 +21,11 @@ This project uses Next.js 14 to create a simple but powerful blog app. It uses N
 
 ### Form Validation
 
-The forms (create and edit posts) are client components with `fetch` to route handlers to: 1. better interact with the form fields 2. provide modern editor 3. have more control over the form
+The forms (create and edit posts) are client components with `fetch` to route handlers to:
+
+1. better interact with the form fields
+2. provide modern editor
+3. have more control over the form
 
 They are validated with `zod` and controlled with `react-hook-form`.
 
