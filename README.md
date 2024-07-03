@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next Blog
 
-## Getting Started
+This project uses Next.js 14 to create a simple but powerful blog app. It uses Next UI components along with TailwindCSS, as well as Prisma with MySQL.
 
-First, run the development server:
+![next-blog-home](./public/next-blog-home.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Create post
+- Edit post
+- Retrieve single post
+- Get all posts
+- Modern editor
+- Image upload
+- Order, filter and pagination
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![next-blog-home](./public/next-blog-create.png)
+![next-blog-home](./public/next-blog-post.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Design
 
-## Learn More
+### Form Validation
 
-To learn more about Next.js, take a look at the following resources:
+The forms (create and edit posts) are client components with `fetch` to route handlers to: 1. better interact with the form fields 2. provide modern editor 3. have more control over the form
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+They are validated with `zod` and controlled with `react-hook-form`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Delete Post
 
-## Deploy on Vercel
+The post deletion process uses a server action to trigger the sql (prisma) command to directly delete the post. The `server actions` are preferred here because it is a simple process and there are not many UI interactions.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Posts Retrieve
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The posts page is a dynamic server side rendered page that fetches the posts and other related data and passes them to its children, like: actions bar, posts list, and pagination components.
+
+It uses `export const dynamic = "force-dynamic"` to reflect the latest changes in the posts.
+
+### Actions
+
+Actions are changing the order direction, filter by users, and pagination. They update the search params when changed, therefore, the posts page detects the changes and refetch the necessary data.
+
+![next-blog-home](./public/next-blog-posts.png)
+
+## Contributions
+
+The project is very capable and designed to be scalable, it still lacks many features like user authentication, login, register, filter by other fields, search for posts. Contributions are welcomed for people who want to practice and improve the project.
